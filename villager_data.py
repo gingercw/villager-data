@@ -18,7 +18,6 @@ def all_species(filename):
         species.add(line.strip().split("|")[1])
     villagers.close()
     return species
-print(all_species("villagers.csv"))
 
 
 def get_villagers_by_species(filename, search_string="All"):
@@ -151,19 +150,17 @@ def find_likeminded_villagers(filename, villager_name):
     """
 
     villagers_data = open(filename)
-    same_personality = {}
+    same_personality = set()
 
     for line in villagers_data:
         if villager_name in line:    
             villager_personality = line.strip().split("|")[2]
-            print(villager_personality)
-    
-        # if villager_personality in line:
-        #     same_personality.add(line.strip().split("|")[0])
-        #     print(line.strip().split("|")[0])
+
+    villagers_data = open(filename)
+    for line in villagers_data:
+        if villager_personality in line:
+            same_personality.add(line.strip().split("|")[0])
 
 
     villagers_data.close()
     return same_personality
-
-print(find_likeminded_villagers("villagers.csv", "Olivia"))
