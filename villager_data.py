@@ -15,13 +15,10 @@ def all_species(filename):
     villagers = open(filename)
 
     for line in villagers:
-        villager_data = line.strip().split("|")
-        species.add(villager_data[1])
+        species.add(line.strip().split("|")[1])
     villagers.close()
     return species
-
-
-
+print(all_species("villagers.csv"))
 
 
 def get_villagers_by_species(filename, search_string="All"):
@@ -39,17 +36,14 @@ def get_villagers_by_species(filename, search_string="All"):
     villagers_data = open(filename)
 
     for line in villagers_data:
-        villager_data = line.strip().split("|")
-        name, species = villager_data[0:2]
-        if species == search_string:
-            villagers.append(name)
+        if line.strip().split("|")[1] == search_string:
+            villagers.append(line.strip().split("|")[0])
         elif search_string == "All":
-            villagers.append(name)
+            villagers.append(line.strip().split("|")[0])
 
     villagers_data.close()
 
     return sorted(villagers)
-
 
 def all_names_by_hobby(filename):
     """Return a list of lists containing villagers' names, grouped by hobby.
@@ -71,21 +65,19 @@ def all_names_by_hobby(filename):
     villagers_data = open(filename)
 
     for line in villagers_data:
-        villager_data = line.strip().split("|")
-        name = villager_data[0]
-        hobby = villager_data[3]
-        if hobby == "Fitness":
-            fitness.append(name)
-        elif hobby == "Nature":
-            nature.append(name)
-        elif hobby == "Education":
-            education.append(name)
-        elif hobby == "Music":
-            music.append(name)
-        elif hobby == "Fashion":
-            fashion.append(name)
-        elif hobby == "Play":
-            play.append(name)
+
+        if "Fitness" in line:
+            fitness.append(line.strip().split("|")[0])
+        elif "Nature" in line:
+            nature.append(line.strip().split("|")[0])
+        elif "Education" in line:
+            education.append(line.strip().split("|")[0])
+        elif "Music" in line:
+            music.append(line.strip().split("|")[0])
+        elif "Fashion" in line:
+            fashion.append(line.strip().split("|")[0])
+        elif "Play" in line:
+            play.append(line.strip().split("|")[0])
     
     villagers_by_hobby = [sorted(fitness), sorted(nature), sorted(education), sorted(music), sorted(fashion), sorted(play)]
 
@@ -112,8 +104,7 @@ def all_data(filename):
     villagers_data = open(filename)
 
     for line in villagers_data:
-        villager_data = line.strip().split("|")
-        all_data.append(tuple(villager_data))
+        all_data.append(tuple(line.strip().split("|")))
 
     villagers_data.close()
 
@@ -138,14 +129,11 @@ def find_motto(filename, villager_name):
     villagers_data = open(filename)
 
     for line in villagers_data:
-        villager_data = line.strip().split("|")
-        name = villager_data[0]
-        motto = villager_data[4]
-
-        if villager_name == name:
-            return motto
+        if villager_name in line:
+            return line.strip().split("|")[4]
 
     villagers_data.close()
+
 
 def find_likeminded_villagers(filename, villager_name):
     """Return a set of villagers with the same personality as the given villager.
@@ -162,4 +150,20 @@ def find_likeminded_villagers(filename, villager_name):
         {'Bella', ..., 'Carmen'}
     """
 
-    # TODO: replace this with your code
+    villagers_data = open(filename)
+    same_personality = {}
+
+    for line in villagers_data:
+        if villager_name in line:    
+            villager_personality = line.strip().split("|")[2]
+            print(villager_personality)
+    
+        # if villager_personality in line:
+        #     same_personality.add(line.strip().split("|")[0])
+        #     print(line.strip().split("|")[0])
+
+
+    villagers_data.close()
+    return same_personality
+
+print(find_likeminded_villagers("villagers.csv", "Olivia"))
