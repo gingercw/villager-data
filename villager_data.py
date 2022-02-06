@@ -93,8 +93,6 @@ def all_names_by_hobby(filename):
 
     return villagers_by_hobby
 
-print(all_names_by_hobby("villagers.csv"))
-
 
 def all_data(filename):
     """Return all the data in a file.
@@ -111,7 +109,13 @@ def all_data(filename):
 
     all_data = []
 
-    # TODO: replace this with your code
+    villagers_data = open(filename)
+
+    for line in villagers_data:
+        villager_data = line.strip().split("|")
+        all_data.append(tuple(villager_data))
+
+    villagers_data.close()
 
     return all_data
 
@@ -130,8 +134,18 @@ def find_motto(filename, villager_name):
         - str: the villager's motto or None
     """
 
-    # TODO: replace this with your code
 
+    villagers_data = open(filename)
+
+    for line in villagers_data:
+        villager_data = line.strip().split("|")
+        name = villager_data[0]
+        motto = villager_data[4]
+
+        if villager_name == name:
+            return motto
+
+    villagers_data.close()
 
 def find_likeminded_villagers(filename, villager_name):
     """Return a set of villagers with the same personality as the given villager.
